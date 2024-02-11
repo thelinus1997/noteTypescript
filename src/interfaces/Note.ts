@@ -1,7 +1,17 @@
-interface Note {
+interface WriteNote {
   username: string;
   title: string;
   note: string;
 }
 
-export default Note;
+interface ResponeNote {
+  username: string;
+  title: string;
+  note: string;
+}
+interface ApiError {
+  message: string;
+  status: number;
+}
+
+export default WriteNote;
