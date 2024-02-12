@@ -2,7 +2,6 @@ import { getNoteCards } from "./noteList";
 import { chooseUser } from "./userSelector";
 import * as ResponseInterfaces from "../interfaces/Note";
 import * as API from "../API/apiCalls";
-import { ResponeNote } from "../interfaces/Note";
 const app = document.getElementById("app") as HTMLElement;
 export async function renderNoteWriter(name: string) {
   app.innerHTML = "";
