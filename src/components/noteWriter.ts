@@ -11,11 +11,11 @@ export async function renderNoteWriter(name: string) {
   headerContainer.classList.add("noteWriteHeader");
   const titleInput: HTMLInputElement = document.createElement("input");
   titleInput.classList.add("titleInput");
-  titleInput.placeholder = "Enter note title";
+  titleInput.placeholder = "Enter note title, minimum 5 letters.";
 
   const messageInput: HTMLTextAreaElement = document.createElement("textarea");
   messageInput.classList.add("messageInput");
-  messageInput.placeholder = "Enter your note message";
+  messageInput.placeholder = "Enter your note message, minimum 5 letters.";
 
   const submitButton: HTMLButtonElement = document.createElement("button");
   submitButton.classList.add("submitButton");

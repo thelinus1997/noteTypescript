@@ -85,10 +85,6 @@ const fetchData = async <T>(
       method,
       url,
       data,
-      headers: {
-        "Content-Type": "application/json",
-        // Add other headers if needed
-      },
     });
 
     return response.data;

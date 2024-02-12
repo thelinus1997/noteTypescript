@@ -19,7 +19,7 @@ export async function editNote(
   titleElement.innerText = `Title: ${titleOfNoteToUpdate}`;
   const messageInput: HTMLTextAreaElement = document.createElement("textarea");
   messageInput.classList.add("messageInput");
-  messageInput.placeholder = "Enter your note message";
+  messageInput.placeholder = "Enter your note message, minimum 5 letters.";
 
   const headerContainer: HTMLElement = document.createElement("div");
   headerContainer.classList.add("noteWriteHeader");
@@ -70,11 +70,15 @@ async function handleNoteUpdate(
   };
   const responseNotes = await API.getNotes(writeNote.username);
   console.log(writeNote);
-  responseNotes.notes.forEach(async (note) => {
-    if (writeNote.title === note.title) {
-      console.log("match found with ID: ", note.id);
-      await API.updateNote(note.id, writeNote);
-      getNoteCards(writeNote.username);
-    }
-  });
+  if (writeNote.note.length >= 5) {
+    responseNotes.notes.forEach(async (note) => {
+      if (writeNote.title === note.title) {
+        console.log("match found with ID: ", note.id);
+        await API.updateNote(note.id, writeNote);
+        getNoteCards(writeNote.username);
+      }
+    });
+  } else {
+    console.log("note must be 5 letters or more.");
+  }
 }

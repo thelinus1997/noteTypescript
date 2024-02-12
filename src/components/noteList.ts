@@ -3,6 +3,7 @@ import * as API from "../API/apiCalls";
 import { renderNoteWriter } from "./noteWriter";
 import * as ResponseInterfaces from "../interfaces/Note";
 import { editNote } from "./noteEditor";
+import { chooseUser } from "./userSelector";
 
 // Reference to the app container
 const app: HTMLElement = document.getElementById("app") as HTMLElement;
@@ -37,6 +38,10 @@ async function renderNotes(
     title: string;
   }[]
 ) {
+  if (!fetchedNotes || fetchedNotes.length === 0) {
+    chooseUser();
+    return;
+  }
   // Assuming you want to create some DOM elements for each note
   fetchedNotes.forEach((note) => {
     const noteElement: HTMLElement = document.createElement("div");
@@ -83,6 +88,8 @@ async function renderNotes(
   // Create a single new note button for the entire set of notes
   const newNoteButton: HTMLButtonElement = document.createElement("button");
   newNoteButton.classList.add("newNoteButton");
+  console.log(fetchedNotes[0]);
+
   const username = fetchedNotes[0].username; // Assuming there's only one username in the fetchedNotes array
 
   newNoteButton.addEventListener("click", () => {
@@ -120,10 +127,12 @@ async function handleDeleteNote(
       currentTitles.notes
         .filter((note) => note.title === titleToDelete)
         .map(async (note) => await API.deleteNote(note.id))
-    );
+    ).then(() => {
+      app.innerHTML = "";
+      renderNotes(filteredNotes);
+    });
 
     // Render the updated list of notes
-    renderNotes(filteredNotes);
   } catch (error) {
     console.error("Error deleting note:", error);
   }
