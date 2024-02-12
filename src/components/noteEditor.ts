@@ -73,7 +73,7 @@ async function handleNoteUpdate(
   responseNotes.notes.forEach(async (note) => {
     if (writeNote.title === note.title) {
       console.log("match found with ID: ", note.id);
-      await API.updateNotes(note.id, writeNote);
+      await API.updateNote(note.id, writeNote);
       getNoteCards(writeNote.username);
     }
   });
