@@ -30,3 +30,10 @@
   color: #333;
   overflow-wrap: anywhere;
 }
+.footerCont {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  height: 4rem;
+  margin: 1rem;
+}

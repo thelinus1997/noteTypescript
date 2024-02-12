@@ -42,6 +42,7 @@ async function renderNotes(
     chooseUser();
     return;
   }
+
   // Assuming you want to create some DOM elements for each note
   fetchedNotes.forEach((note) => {
     const noteElement: HTMLElement = document.createElement("div");
@@ -86,6 +87,12 @@ async function renderNotes(
   });
 
   // Create a single new note button for the entire set of notes
+  const footerCont: HTMLElement = document.createElement("div");
+  footerCont.classList.add("footerCont");
+  const changeUserButton: HTMLElement = document.createElement("div");
+  changeUserButton.classList.add("changeUser");
+  changeUserButton.addEventListener("click", chooseUser);
+
   const newNoteButton: HTMLButtonElement = document.createElement("button");
   newNoteButton.classList.add("newNoteButton");
   console.log(fetchedNotes[0]);
@@ -98,7 +105,8 @@ async function renderNotes(
   });
 
   newNoteButton.innerText = "New note";
-  app.append(newNoteButton);
+  footerCont.append(newNoteButton, changeUserButton);
+  app.append(footerCont);
 }
 
 // Function to handle new note button click
