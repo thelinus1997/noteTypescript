@@ -1,4 +1,4 @@
 import "../src/assets/styles/main.scss";
-import { showNoteCards } from "./components/noteEditor";
+import { chooseUser } from "./components/userSelector";
 
-showNoteCards();
+chooseUser();

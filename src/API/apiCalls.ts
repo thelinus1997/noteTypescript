@@ -1,65 +1,75 @@
 import axios, { AxiosResponse } from "axios";
-const note = {
-  username: "linus",
-  title: "Testar",
-  note: "Min testanteckning",
-};
-const getNotes = async (userName: string) => {
+import * as ResponseInterfaces from "../interfaces/Note";
+
+const getNotes = async (
+  userName: string
+): Promise<ResponseInterfaces.ResponeNote> => {
   try {
-    const response: AxiosResponse = await axios.get(
-      `https://o6wl0z7avc.execute-api.eu-north-1.amazonaws.com/api/notes/${userName}`
-    );
-    const responseData: JSON[] = response.data.notes;
+    const response: AxiosResponse<ResponseInterfaces.ResponeNote> =
+      await axios.get(
+        `https://o6wl0z7avc.execute-api.eu-north-1.amazonaws.com/api/notes/${userName}`
+      );
+
+    const responseData: ResponseInterfaces.ResponeNote = response.data;
     return responseData;
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    // Return an empty array if there's an error
+    return { success: false, notes: [] };
   }
 };
-const getIdNoteTest = async (testStuff: string) => {
-  axios({
-    method: "get",
-    url: `https://o6wl0z7avc.execute-api.eu-north-1.amazonaws.com/api/notes/${testStuff}`,
-  })
-    .then((response) => console.log(response.data))
-    .catch((error) => console.log(error));
-};
-const updateNotes = async (noteId: string) => {
-  axios({
-    method: "put",
-    url: `https://o6wl0z7avc.execute-api.eu-north-1.amazonaws.com/api/notes/${noteId}`, // product with an `id` of 3
-    data: {
-      note: "ny note",
-    },
-  })
-    .then((response) => console.log(response.data)) // return updated data
-    .catch((error) => console.log(error.response));
-};
-const postNote = async (note: object) => {
-  try {
-    const dataToSend = note;
 
-    const response: AxiosResponse = await axios.post(
-      "https://o6wl0z7avc.execute-api.eu-north-1.amazonaws.com/api/notes",
-      dataToSend
+const updateNotes = async (
+  noteId: string,
+  note: ResponseInterfaces.WriteNote
+): Promise<void> => {
+  try {
+    const requestBody = {
+      note: note.note,
+    };
+    const response = await axios.put(
+      `https://o6wl0z7avc.execute-api.eu-north-1.amazonaws.com/api/notes/${noteId}`,
+      requestBody,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
     );
 
-    const responseData: JSON = response.data;
-    console.log(responseData);
-    // Process the response data
-  } catch (error: any) {
-    console.error("Error posting data:", error.response.data);
+    // Handle response as needed
+    console.log(response.data); // Access response data
+  } catch (error) {
+    // Handle errors
+    console.error(error);
   }
 };
-const deleteNote = async (noteId: string) => {
-  console.log("deleting");
+
+const postNote = async (note: ResponseInterfaces.WriteNote): Promise<void> => {
   try {
-    const response: AxiosResponse = await axios.delete(
+    await axios.post(
+      "https://o6wl0z7avc.execute-api.eu-north-1.amazonaws.com/api/notes",
+      note
+    );
+    console.log("Note posted successfully");
+  } catch (error) {
+    console.error("Error posting note:", error);
+    // Handle error or throw it if needed
+    throw error;
+  }
+};
+
+const deleteNote = async (noteId: string): Promise<void> => {
+  try {
+    await axios.delete(
       `https://o6wl0z7avc.execute-api.eu-north-1.amazonaws.com/api/notes/${noteId}`
     );
-    const responseData: JSON = response.data;
-    console.log(responseData);
-  } catch (error: any) {
-    console.error("Error posting data:", error.response.data);
+    console.log("Note deleted successfully");
+  } catch (error) {
+    console.error("Error deleting note:", error);
+    // Handle error or throw it if needed
+    throw error;
   }
 };
-export { getNotes, updateNotes, postNote, deleteNote, getIdNoteTest };
+
+export { getNotes, updateNotes, postNote, deleteNote };

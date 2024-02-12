@@ -1,0 +1,17 @@
+.nameSelectButton,
+.submitButton,
+.deleteNoteButton,
+.editNoteButton,
+.newNoteButton {
+  @include basicButton;
+}
+.goBack {
+  width: 4rem;
+  height: 4rem;
+  background: url("../SVG/goBack.svg");
+}
+.changeUser {
+  width: 4rem;
+  height: 4rem;
+  background: url("../SVG/user.svg");
+}

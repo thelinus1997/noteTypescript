@@ -1,17 +1,21 @@
-interface WriteNote {
+export interface WriteNote {
   username: string;
   title: string;
   note: string;
 }
 
-interface ResponeNote {
-  username: string;
-  title: string;
-  note: string;
+export interface ResponeNote {
+  success: boolean;
+  notes: Array<{
+    note: string;
+    username: string;
+    title: string;
+    id: string;
+    // Add more properties if needed
+  }>;
 }
-interface ApiError {
+
+export interface ApiError {
   message: string;
   status: number;
 }
-
-export default WriteNote;
